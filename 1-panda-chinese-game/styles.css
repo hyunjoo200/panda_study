@@ -1,0 +1,390 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap');
+
+:root {
+  --cream: #FFF8E7;
+  --cream-strong: #FFF1CC;
+  --forest: #2F4B3C;
+  --forest-soft: #5B7A64;
+  --brick: #D65B4A;
+  --brick-dark: #B5471B;
+  --gold: #E8B84B;
+  --line: #E1D9BE;
+  --ok: #4C9A5B;
+  --bad: #D65B4A;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Gowun Dodum', sans-serif;
+  background: #0d1f16;
+  overflow: hidden;
+}
+
+button { font-family: 'Gaegu', cursive; cursor: pointer; }
+
+/* ---------- 상단 바 ---------- */
+#top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: linear-gradient(180deg, rgba(47,75,60,0.92), rgba(47,75,60,0.75));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  z-index: 50;
+  font-family: 'Gaegu', cursive;
+}
+#top-bar-title { font-size: 20px; font-weight: 700; }
+#top-bar-right { display: flex; align-items: center; gap: 8px; }
+.pill-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.pill-btn:active { transform: scale(0.95); }
+#star-counter {
+  background: var(--gold);
+  color: #5a3d00;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 15px;
+  min-width: 56px;
+  text-align: center;
+}
+
+/* ---------- 메인 스테이지 ---------- */
+#stage {
+  position: fixed;
+  top: 52px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+#bg-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/bamboo_hill.png');
+  background-size: cover;
+  background-position: center 65%;
+  filter: saturate(1.05);
+}
+#bg-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 30%, rgba(20,30,15,0.25) 100%);
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+.screen.active { display: flex; }
+
+/* ---------- 타이틀 화면 ---------- */
+#screen-title {
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+}
+#title-panda {
+  height: 34vh;
+  max-height: 280px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+#screen-title h1 {
+  font-family: 'Gaegu', cursive;
+  color: #fff;
+  font-size: clamp(28px, 6vw, 44px);
+  margin: 10px 0 2px;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+#screen-title .subtitle {
+  color: #FFF8E7;
+  font-size: clamp(14px, 3vw, 18px);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  margin-bottom: 22px;
+}
+.big-btn {
+  background: var(--brick);
+  color: #fff;
+  border: none;
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 700;
+  padding: 14px 42px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 var(--brick-dark), 0 10px 18px rgba(0,0,0,0.3);
+}
+.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--brick-dark); }
+
+/* ---------- VN(대화) 화면 ---------- */
+#screen-vn { justify-content: flex-end; }
+
+.portrait {
+  position: absolute;
+  right: 4vw;
+  bottom: 30vh;
+  height: 48vh;
+  max-height: 440px;
+  filter: drop-shadow(0 12px 16px rgba(0,0,0,0.35));
+  animation: portrait-in 0.35s ease;
+}
+.portrait.left { right: auto; left: 4vw; }
+.portrait.hidden { display: none; }
+@keyframes portrait-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 학습 카드 (한자/병음/뜻) */
+.vocab-card {
+  position: absolute;
+  left: 50%;
+  top: 10vh;
+  transform: translateX(-50%);
+  background: var(--cream);
+  border: 3px solid var(--gold);
+  border-radius: 22px;
+  padding: 14px 32px 18px;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+  animation: card-pop 0.3s ease;
+}
+.vocab-card.hidden { display: none; }
+@keyframes card-pop {
+  from { opacity: 0; transform: translateX(-50%) scale(0.85); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+.vocab-hanzi {
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 700;
+  color: var(--brick);
+  line-height: 1.1;
+}
+.vocab-pinyin { font-size: clamp(18px, 4vw, 24px); color: var(--brick-dark); margin-top: 2px; }
+.vocab-meaning { font-size: clamp(15px, 3.4vw, 19px); color: var(--forest); margin-top: 4px; }
+.speak-btn {
+  margin-top: 10px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 16px;
+}
+.speak-btn:active { transform: scale(0.95); }
+
+/* 성조 체험 패널 */
+.tone-panel {
+  position: absolute;
+  left: 50%;
+  top: 9vh;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: min(420px, 88vw);
+}
+.tone-panel.hidden { display: none; }
+.tone-btn {
+  background: var(--cream);
+  border: 3px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 6px;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+}
+.tone-btn .th { font-size: clamp(26px, 7vw, 36px); font-weight: 700; color: var(--forest); }
+.tone-btn .tp { font-size: clamp(14px, 3.4vw, 17px); color: var(--brick-dark); }
+.tone-btn .tm { font-size: clamp(11px, 2.8vw, 13px); color: var(--forest-soft); }
+.tone-btn.done { border-color: var(--gold); background: var(--cream-strong); }
+.tone-btn:active { transform: scale(0.96); }
+
+/* 하단 대사창 */
+#dialogue-box {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-strong) 100%);
+  border-top: 4px solid var(--gold);
+  border-radius: 22px 22px 0 0;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+  min-height: 26vh;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.25);
+}
+#speaker-name {
+  font-family: 'Gaegu', cursive;
+  font-weight: 700;
+  color: var(--brick-dark);
+  font-size: clamp(16px, 4vw, 20px);
+  margin-bottom: 4px;
+}
+#dialogue-text {
+  color: var(--forest);
+  font-size: clamp(16px, 4.2vw, 21px);
+  line-height: 1.5;
+  min-height: 2.4em;
+}
+#follow-prompt {
+  margin-top: 6px;
+  display: inline-block;
+  background: #FFEFC2;
+  color: var(--brick-dark);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: clamp(14px, 3.4vw, 16px);
+  font-weight: 700;
+}
+#follow-prompt.hidden { display: none; }
+
+#choice-area {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+#choice-area.hidden { display: none; }
+.choice-btn {
+  background: #fff;
+  border: 3px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: clamp(16px, 4vw, 19px);
+  color: var(--forest);
+  text-align: left;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+.choice-btn:active { transform: scale(0.98); }
+.choice-btn.correct { background: #E7F5E9; border-color: var(--ok); color: #1f6e30; font-weight: 700; }
+.choice-btn.wrong { background: #FBE8E5; border-color: var(--bad); color: var(--brick-dark); }
+.choice-btn.dim { opacity: 0.5; pointer-events: none; }
+
+.next-btn {
+  margin-top: 14px;
+  background: var(--brick);
+  color: #fff;
+  border: none;
+  font-size: clamp(17px, 4vw, 20px);
+  font-weight: 700;
+  padding: 10px 30px;
+  border-radius: 999px;
+  float: right;
+  box-shadow: 0 5px 0 var(--brick-dark);
+}
+.next-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--brick-dark); }
+.next-btn.hidden { display: none; }
+
+#feedback-msg {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: clamp(15px, 3.8vw, 18px);
+}
+#feedback-msg.ok { color: var(--ok); }
+#feedback-msg.bad { color: var(--bad); }
+
+/* ---------- 결과 화면 ---------- */
+#screen-result {
+  justify-content: flex-start;
+  overflow-y: auto;
+  text-align: center;
+  padding: 24px 16px 40px;
+  background: linear-gradient(180deg, rgba(255,247,224,0.97), rgba(255,239,194,0.97));
+}
+#screen-result h1 {
+  font-family: 'Gaegu', cursive;
+  color: var(--brick-dark);
+  font-size: clamp(26px, 6vw, 34px);
+  margin: 6px 0 2px;
+}
+#screen-result .subtitle { color: var(--forest-soft); margin-bottom: 14px; }
+.result-stars { font-size: clamp(24px, 6vw, 32px); margin-bottom: 14px; }
+.panda-say { color: var(--forest); margin: 18px 0; font-size: clamp(15px, 3.6vw, 18px); }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.mini-card {
+  background: #fff;
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 10px 6px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.mini-card .mh { font-size: 24px; font-weight: 700; color: var(--brick); }
+.mini-card .mp { font-size: 12px; color: var(--brick-dark); }
+.mini-card .mm { font-size: 11px; color: var(--forest-soft); margin-top: 2px; }
+.mini-card button {
+  margin-top: 6px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* ---------- 모달 ---------- */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 20, 0.55);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#modal-overlay.hidden { display: none; }
+#modal-box {
+  background: var(--cream);
+  border-radius: 20px;
+  border: 3px solid var(--gold);
+  width: min(600px, 100%);
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 16px;
+}
+#modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Gaegu', cursive;
+  font-size: 20px;
+  color: var(--forest);
+  margin-bottom: 10px;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--forest-soft);
+}
+
+.hidden { display: none !important; }
+
+/* ---------- 모바일 보정 ---------- */
+@media (max-width: 480px) {
+  .portrait { height: 36vh; bottom: 27vh; right: 2vw; }
+  #dialogue-box { min-height: 30vh; padding: 14px 14px calc(14px + env(safe-area-inset-bottom,0px)); }
+  .vocab-card { top: 7vh; padding: 10px 20px 14px; }
+}

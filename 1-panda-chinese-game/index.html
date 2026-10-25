@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>판다 탐험대 - 대나무 언덕 (1차시)</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 상단 바: 제목 + 별/XP 표시 + 학습카드 모아보기 버튼 -->
+  <header id="top-bar">
+    <div id="top-bar-title">🐼 대나무 언덕</div>
+    <div id="top-bar-right">
+      <button id="btn-cards" class="pill-btn">📒 배운 표현</button>
+      <div id="star-counter">⭐ <span id="star-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- 게임 메인 화면: 배경 이미지 + 비주얼노벨 패널 -->
+  <main id="stage">
+    <div id="bg-layer"></div>
+
+    <!-- 타이틀 화면 -->
+    <section id="screen-title" class="screen active">
+      <img id="title-panda" src="assets/panda_hero.png" alt="판디" />
+      <h1>판다 탐험대 출동!</h1>
+      <p class="subtitle">대나무 언덕 · 중국어와 첫 만남</p>
+      <button id="btn-start" class="big-btn">탐험 시작</button>
+    </section>
+
+    <!-- 대화/학습/퀴즈 화면 (공통 VN 틀) -->
+    <section id="screen-vn" class="screen">
+      <!-- 캐릭터 초상화 -->
+      <img id="portrait" class="portrait" alt="" />
+
+      <!-- 학습 카드 (한자/병음/뜻) -->
+      <div id="vocab-card" class="vocab-card hidden">
+        <div id="vocab-hanzi" class="vocab-hanzi"></div>
+        <div id="vocab-pinyin" class="vocab-pinyin"></div>
+        <div id="vocab-meaning" class="vocab-meaning"></div>
+        <button id="btn-speak" class="speak-btn">🔊 발음 듣기</button>
+      </div>
+
+      <!-- 성조 체험 전용 4버튼 패널 -->
+      <div id="tone-panel" class="tone-panel hidden"></div>
+
+      <!-- 하단 대사창 -->
+      <div id="dialogue-box">
+        <div id="speaker-name"></div>
+        <div id="dialogue-text"></div>
+        <div id="follow-prompt" class="hidden">🗣️ 따라 말해 보세요!</div>
+
+        <!-- 선택지 영역 -->
+        <div id="choice-area" class="hidden"></div>
+
+        <button id="btn-next" class="next-btn hidden">다음 ▶</button>
+      </div>
+    </section>
+
+    <!-- 결과 화면 -->
+    <section id="screen-result" class="screen">
+      <h1>🎉 대나무 언덕 완료! 🎉</h1>
+      <p class="subtitle">오늘 배운 표현을 모두 모았어요!</p>
+      <div id="result-stars" class="result-stars"></div>
+      <div id="result-cards" class="card-grid"></div>
+      <p class="panda-say">🐼 "정말 멋진 탐험이었어! 다음 탐험에서 또 만나자!"</p>
+      <button id="btn-restart" class="big-btn">다시 탐험하기</button>
+    </section>
+  </main>
+
+  <!-- 학습 카드 모아보기 모달 -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box">
+      <div id="modal-header">
+        <span>📒 오늘 배운 표현</span>
+        <button id="btn-modal-close" class="icon-btn">✕</button>
+      </div>
+      <div id="modal-cards" class="card-grid"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
